@@ -49,4 +49,24 @@ class MediaController extends Controller
         }
 
     }
+
+
+    public function popularShows(): JsonResponse{
+        try {
+            $data = $this->mediaService->getPopularShows();
+
+            return response()->json([
+                'success' => true,
+                'data' => $data
+            ]);
+        } catch(\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => $e->getMessage(),
+                'line' => $e->getLine()
+            ], 500);
+        }
+    }
+
+ 
 }
