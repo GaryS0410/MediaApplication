@@ -4,8 +4,8 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Services\MediaService;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Symfony\Component\HttpFoundation\JsonResponse;
 
 class MediaController extends Controller
 {
@@ -30,7 +30,7 @@ class MediaController extends Controller
         }
     }
 
-    public function searchMovie(\Illuminate\Http\Request $request) : \Illuminate\Http\JsonResponse{
+    public function searchMovie(Request $request) : JsonResponse{
         $searchedMovie = $request->query('query');
 
         if(!$searchedMovie) {
@@ -68,5 +68,23 @@ class MediaController extends Controller
         }
     }
 
+    public function searchShows(Request $request): JsonResponse{
+        $searchedShow = $request->query('query');
+
+        if(!$searchedShow) {
+            return response()->json(['message' => 'Search term invalid'], 400);
+        }
+
+        try {
+            $data = $this->mediaService->searchForMovie($searchedShow);
+
+            return response()->json([
+                'success' => true,
+                'results' => $data['results']
+            ]);
+        } catch (\Exception $e) {
+            return response()->json(['success' => false, 'message' => $e->getMessage()], 500);
+        }
+    }
  
 }

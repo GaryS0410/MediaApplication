@@ -20,7 +20,6 @@ class MediaService {
     }
 
     public function searchForMovie(string $query) {
-        // Removed the trailing slash after 'movie'
         return Http::get("{$this->baseUrl}/search/movie", [
             'api_key' => $this->apiKey,
             'query'   => $query,
@@ -30,6 +29,13 @@ class MediaService {
     public function getPopularShows(){
         return Http::get("{$this->baseUrl}/tv/popular", [
             'api_key' => $this->apiKey,
+        ])->json();
+    }
+
+    public function searchForShow(string $query) {
+        return Http::get("{$this->baseUrl}/search/tv", [
+            'api_key' => $this->apiKey,
+            'query' => $query,
         ])->json();
     }
 }
