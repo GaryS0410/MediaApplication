@@ -30,8 +30,6 @@ export const MainPage = () => {
     <div> 
       <div className="movies-grid">
         {movies && movies.map((movie) => (
-          // Note the use of ( ) instead of { } after the => 
-          // This ensures the component is returned!
           <div key={movie.id} className="movie-card" style={{ border: '1px solid #ccc', margin: '10px', padding: '10px' }}>
             <h3>{movie.title}</h3>
             <p>{movie.overview ? movie.overview.substring(0, 100) + "..." : "No description available."}</p>
